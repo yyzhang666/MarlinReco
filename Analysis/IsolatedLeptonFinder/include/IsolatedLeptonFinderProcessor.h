@@ -18,19 +18,18 @@
 #include <lcio.h>
 #include <marlin/Processor.h>
 
-#include "IMPL/ReconstructedParticleImpl.h"
 #include <EVENT/MCParticle.h>
 #include <EVENT/ReconstructedParticle.h>
 #include <UTIL/LCRelationNavigator.h>
+#include "IMPL/ReconstructedParticleImpl.h"
 
 class IsolatedLeptonFinderProcessor : public marlin::Processor {
-
 public:
   virtual Processor* newProcessor() { return new IsolatedLeptonFinderProcessor; }
 
   IsolatedLeptonFinderProcessor();
 
-  IsolatedLeptonFinderProcessor(const IsolatedLeptonFinderProcessor&) = delete;
+  IsolatedLeptonFinderProcessor(const IsolatedLeptonFinderProcessor&)            = delete;
   IsolatedLeptonFinderProcessor& operator=(const IsolatedLeptonFinderProcessor&) = delete;
 
   virtual void init();
@@ -104,69 +103,72 @@ protected:
   /** Output collection of dressed isolated leptons */
   std::string _outputDressedIsoLepCollection{};
 
-  LCCollection* _pfoCol = nullptr;
-  float _cosConeAngle = 0;
-  std::vector<ReconstructedParticle*> _workingList = {};
+  LCCollection*                       _pfoCol       = nullptr;
+  float                               _cosConeAngle = 0;
+  std::vector<ReconstructedParticle*> _workingList  = {};
 
   /** If set to true, uses PID cuts */
-  bool _usePID = false;
+  bool  _usePID                             = false;
   float _electronMinEnergyDepositByMomentum = 0;
   float _electronMaxEnergyDepositByMomentum = 0;
-  float _electronMinEcalToHcalFraction = 0;
-  float _electronMaxEcalToHcalFraction = 0;
-  float _muonMinEnergyDepositByMomentum = 0;
-  float _muonMaxEnergyDepositByMomentum = 0;
-  float _muonMinEcalToHcalFraction = 0;
-  float _muonMaxEcalToHcalFraction = 0;
+  float _electronMinEcalToHcalFraction      = 0;
+  float _electronMaxEcalToHcalFraction      = 0;
+  float _muonMinEnergyDepositByMomentum     = 0;
+  float _muonMaxEnergyDepositByMomentum     = 0;
+  float _muonMinEcalToHcalFraction          = 0;
+  float _muonMaxEcalToHcalFraction          = 0;
 
   /** If set to true, uses impact parameter cuts */
-  bool _useImpactParameter = false;
-  float _minD0 = 0;
-  float _maxD0 = 0;
-  float _minZ0 = 0;
-  float _maxZ0 = 0;
-  float _minR0 = 0;
-  float _maxR0 = 0;
+  bool  _useImpactParameter = false;
+  float _minD0              = 0;
+  float _maxD0              = 0;
+  float _minZ0              = 0;
+  float _maxZ0              = 0;
+  float _minR0              = 0;
+  float _maxR0              = 0;
 
   /** If set to true, uses impact parameter significance cuts */
-  bool _useImpactParameterSignificance = false;
-  float _minD0Sig = 0;
-  float _maxD0Sig = 0;
-  float _minZ0Sig = 0;
-  float _maxZ0Sig = 0;
-  float _minR0Sig = 0;
-  float _maxR0Sig = 0;
+  bool  _useImpactParameterSignificance = false;
+  float _minD0Sig                       = 0;
+  float _maxD0Sig                       = 0;
+  float _minZ0Sig                       = 0;
+  float _maxZ0Sig                       = 0;
+  float _minR0Sig                       = 0;
+  float _maxR0Sig                       = 0;
 
   /** If set to true, uses rectangular cuts for isolation */
-  bool _useRectangularIsolation = false;
-  float _isoMinTrackEnergy = 0;
-  float _isoMaxTrackEnergy = 0;
-  float _isoMinConeEnergy = 0;
-  float _isoMaxConeEnergy = 0;
+  bool  _useRectangularIsolation = false;
+  float _isoMinTrackEnergy       = 0;
+  float _isoMaxTrackEnergy       = 0;
+  float _isoMinConeEnergy        = 0;
+  float _isoMaxConeEnergy        = 0;
 
   /** If set to true, uses polynomial cuts for isolation */
-  bool _usePolynomialIsolation = false;
-  float _isoPolynomialA = 0;
-  float _isoPolynomialB = 0;
-  float _isoPolynomialC = 0;
+  bool  _usePolynomialIsolation = false;
+  float _isoPolynomialA         = 0;
+  float _isoPolynomialB         = 0;
+  float _isoPolynomialC         = 0;
 
   /** If set to true, uses jet-based isolation (LAL algorithm) */
-  bool _useJetIsolation = false;
-  std::string _jetCollectionName{};
+  bool                                                     _useJetIsolation = false;
+  std::string                                              _jetCollectionName{};
   std::map<ReconstructedParticle*, ReconstructedParticle*> _rpJetMap{};
-  float _jetIsoVetoMinXt = 0;
-  float _jetIsoVetoMaxXt = 0;
-  float _jetIsoVetoMinZ = 0;
-  float _jetIsoVetoMaxZ = 0;
+  float                                                    _jetIsoVetoMinXt = 0;
+  float                                                    _jetIsoVetoMaxXt = 0;
+  float                                                    _jetIsoVetoMinZ  = 0;
+  float                                                    _jetIsoVetoMaxZ  = 0;
 
   /** If set to true, uses lepton dressing */
-  bool _useDressedLeptons = false;
-  bool _mergeCloseElectrons = false;
+  bool  _useDressedLeptons    = false;
+  bool  _mergeCloseElectrons  = false;
   float _dressPhotonConeAngle = 0;
   float _mergeLeptonConeAngle = 0;
 
   /** If set to true, uses Pandora particle IDs */
   bool _usePandoraIDs = false;
+
+  /* DEBUG: Map from copied PFO to original PFO */
+  std::map<ReconstructedParticle*, ReconstructedParticle*> _copy2orig;
 };
 
 #endif
