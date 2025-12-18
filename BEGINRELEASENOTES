@@ -1,5 +1,0 @@
-BEGINRELEASENOTES
-- Fixed cone energy calculation in IsolatedLeptonFinderProcessor to avoid
-  self-counting when reconstructed particles are copied internally.
-ENDRELEASENOTES
-
