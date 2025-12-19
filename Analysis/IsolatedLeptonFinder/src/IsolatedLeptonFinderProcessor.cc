@@ -358,7 +358,6 @@ ReconstructedParticleImpl* IsolatedLeptonFinderProcessor::CopyReconstructedParti
   pfo->setGoodnessOfPID(pfo_orig->getGoodnessOfPID());
   pfo->setStartVertex(pfo_orig->getStartVertex());
 
-  // FIXED
   for (unsigned int i = 0; i < pfo_orig->getTracks().size(); i++) {
     pfo->addTrack(pfo_orig->getTracks()[i]);
   }
@@ -479,11 +478,11 @@ bool IsolatedLeptonFinderProcessor::IsIsolatedPolynomial(ReconstructedParticle* 
 }
 
 bool IsolatedLeptonFinderProcessor::IsIsolatedJet(ReconstructedParticle* pfo) {
+    // jet-based isolated lepton (LAL algorithm)
   ReconstructedParticle* orig = findOriginal(pfo);
 
   if (_rpJetMap.find(orig) == _rpJetMap.end()) {
     // this is often the case when jet finding fails e.g. due to too few particles in event
-    // Use original address
     return false;
   }
 
