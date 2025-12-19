@@ -167,7 +167,21 @@ protected:
   /** If set to true, uses Pandora particle IDs */
   bool _usePandoraIDs = false;
 
-  /* DEBUG: Map from copied PFO to original PFO */
+ /**
+ * Map from internally copied PFOs to their original input PFOs.
+ *
+ * The IsolatedLeptonFinder creates internal copies of ReconstructedParticles
+ * (e.g. for dressing leptons or producing modified output collections).
+ * However, isolation quantities such as the cone energy are defined with
+ * respect to the original input PFO collection.
+ *
+ * Since the copied PFOs are distinct objects, pointer comparisons would
+ * otherwise fail (e.g. when excluding the lepton itself from the cone),
+ * leading to incorrect self-counting in the isolation energy.
+ *
+ * This map is therefore used to recover the association to the original
+ * PFO when computing isolation-related quantities.
+ */
   std::map<ReconstructedParticle*, ReconstructedParticle*> _copy2orig;
 };
 
