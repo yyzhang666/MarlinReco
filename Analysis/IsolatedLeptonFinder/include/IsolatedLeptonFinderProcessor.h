@@ -36,6 +36,11 @@ public:
   virtual void processEvent(LCEvent* evt);
   virtual void end();
 
+private:
+
+  /// Return the original PFO if this particle is a copy, otherwise return itself
+  ReconstructedParticle* findOriginal(ReconstructedParticle* pfo) const;
+
 protected:
   /** Returns true if pfo is a lepton */
   bool IsGoodLepton(ReconstructedParticle* pfo);
