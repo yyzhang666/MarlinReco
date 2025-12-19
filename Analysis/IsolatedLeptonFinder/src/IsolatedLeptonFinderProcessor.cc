@@ -169,8 +169,15 @@ IsolatedLeptonFinderProcessor::IsolatedLeptonFinderProcessor() : Processor("Isol
 
 void IsolatedLeptonFinderProcessor::init() {
   streamlog_out(DEBUG) << "   init called  " << std::endl;
-  streamlog_out(ERROR) << "### USING FIXED IsolatedLeptonFinderProcessor (local build) ###" << std::endl;
   printParameters();
+}
+
+ReconstructedParticle* IsolatedLeptonFinderProcessor::findOriginal(ReconstructedParticle* pfo) const {
+  const auto it = _copy2orig.find(pfo);
+  if (it != _copy2orig.end()) {
+    return it->second;
+  }
+  return pfo;
 }
 
 void IsolatedLeptonFinderProcessor::processEvent(LCEvent* evt) {
@@ -460,7 +467,7 @@ bool IsolatedLeptonFinderProcessor::IsIsolatedPolynomial(ReconstructedParticle* 
 }
 
 bool IsolatedLeptonFinderProcessor::IsIsolatedJet(ReconstructedParticle* pfo) {
-  ReconstructedParticle* orig = _copy2orig.count(pfo) ? _copy2orig[pfo] : pfo;
+  ReconstructedParticle* orig = findOriginal(pfo);
 
   if (_rpJetMap.find(orig) == _rpJetMap.end()) {
     // this is often the case when jet finding fails e.g. due to too few particles in event
@@ -542,7 +549,7 @@ bool IsolatedLeptonFinderProcessor::PassesImpactParameterSignificanceCuts(Recons
 }
 
 float IsolatedLeptonFinderProcessor::getConeEnergy(ReconstructedParticle* pfo) {
-  ReconstructedParticle* orig = _copy2orig.count(pfo) ? _copy2orig[pfo] : pfo;  // Get the original address
+  ReconstructedParticle* orig = findOriginal(pfo);  // Get the original address
 
   float    coneE = 0;
   TVector3 P(orig->getMomentum());
