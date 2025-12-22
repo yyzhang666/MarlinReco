@@ -478,7 +478,7 @@ bool IsolatedLeptonFinderProcessor::IsIsolatedPolynomial(ReconstructedParticle* 
 }
 
 bool IsolatedLeptonFinderProcessor::IsIsolatedJet(ReconstructedParticle* pfo) {
-    // jet-based isolated lepton (LAL algorithm)
+  // jet-based isolated lepton (LAL algorithm)
   ReconstructedParticle* orig = findOriginal(pfo);
 
   if (_rpJetMap.find(orig) == _rpJetMap.end()) {
